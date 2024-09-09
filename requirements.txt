@@ -1,0 +1,5 @@
+streamlit==1.10.0
+pandas==1.4.2
+presidio-analyzer==2.2.0
+spacy==3.2.1
+https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.0.0/en_core_web_lg-3.0.0.tar.gz
