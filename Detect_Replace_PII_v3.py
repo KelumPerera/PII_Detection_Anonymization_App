@@ -68,7 +68,7 @@ def main():
         """, unsafe_allow_html=True)
         
     st.title('PII Scanner & Anonymizer')
-    st.header('Powered by Microsoft Presidio')
+    st.subheader('Powered by Microsoft Presidio')
 
     st.markdown("""
                 
