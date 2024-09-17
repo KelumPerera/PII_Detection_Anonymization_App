@@ -48,7 +48,7 @@ def df_to_excel_download_link(df, filename):
         b64 = base64.b64encode(output.getvalue()).decode()
         
         # Create a download link
-        href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="{filename}">Download Excel file</a>'
+        href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="{filename}">Download anonymized data as Excel</a>'
         return href
         
     except Exception as e:
@@ -67,19 +67,19 @@ def main():
         </script>
         """, unsafe_allow_html=True)
         
-    st.title('PII Detection and Anonymization Application')
+    st.title('PII Scanner & Anonymizer')
+    st.header('Powered by Microsoft Presidio')
 
     st.markdown("""
                 
-        This application uses the **Microsoft Presidio** library to detect and anonymize personally identifiable information (PII). 
-        Presidio is an open-source data protection and anonymization API developed by Microsoft, which helps in identifying and masking PII data.
-        For more information, visit the [Presidio GitHub repository](https://github.com/microsoft/presidio).
+        This app uses the open-source Presidio library to identify and mask sensitive information in your text. Protect your data with ease!
+        (https://github.com/microsoft/presidio).
     """)
 
     # User input options: Text Input or File Upload
-    input_method = st.radio("Choose input method:", ('Free Text', 'Upload File'))
+    input_method = st.radio("Choose your input:", ('Paste text', 'Upload File'))
 
-    if input_method == 'Free Text':
+    if input_method == 'Paste text':
         # Free text input
         user_text = st.text_area("Enter your text:", height=300)
         if st.button('Detect and Replace PII in Text'):
@@ -113,7 +113,7 @@ def main():
                 st.dataframe(df)
 
                 # Button to detect and replace PII
-                if st.button('Detect and Replace PII in File'):
+                if st.button('Detect & Anonymize PII Instantly'):
                     # Apply PII detection to each text column
                     for col in df.columns:
                         if df[col].dtype == object:  # Check for text columns
@@ -126,7 +126,7 @@ def main():
     # Add a footer
     st.markdown("""
     <hr>
-    <p class="footer">Developed by Kelum Perera, Data Privacy Auditor, Chartered Accountant, LLB (Hons), C|HFI, AWS Certified Solution Architect.</p>
+    <p class="footer">**Developed by Kelum Perera**,<br /> Data Privacy Auditor | Chartered Accountant | LLB (Hons) | C|HFI | AWS Certified Solution Architect.</p>
     """, unsafe_allow_html=True)
         
 
