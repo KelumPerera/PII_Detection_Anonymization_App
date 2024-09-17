@@ -37,20 +37,16 @@ def df_to_excel_download_link(df, filename):
         output = BytesIO()
         
         workbook = Workbook()
-        worksheet = workbook.active
-        if 'Sheet' in workbook.sheetnames:
-            workbook.remove(workbook['Sheet'])
-        # Use the ExcelWriter, passing in the workbook
+        sheet = workbook.active
+        sheet.title = 'Sheet1'
+
         with pd.ExcelWriter(output, engine='openpyxl') as writer:
             writer.book = workbook
-            writer.sheets = dict((ws.title, ws) for ws in workbook.worksheets)
-            # Write the DataFrame to the ExcelWriter
             df.to_excel(writer, index=False, sheet_name='Sheet1')
-            # Save the workbook to the BytesIO buffer
             writer.save()
-        
+             
         output.seek(0)
-        b64 = base64.b64encode(output.getvalue()).decode()
+        b64 = base64.b64encode(output.read()).decode()
         href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="{filename}">Download Excel file</a>'
 
         return href
