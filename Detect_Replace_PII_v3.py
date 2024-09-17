@@ -126,7 +126,7 @@ def main():
     # Add a footer
     st.markdown("""
     <hr>
-    <p class="footer">**Developed by Kelum Perera**,<br /> Data Privacy Auditor | Chartered Accountant | LLB (Hons) | C|HFI | AWS Certified Solution Architect.</p>
+    <p class="footer"><b>Developed by Kelum Perera</b>,<br /> Data Privacy Auditor | Chartered Accountant | LLB (Hons) | C|HFI | AWS Certified Solution Architect.</p>
     """, unsafe_allow_html=True)
         
 
