@@ -32,17 +32,21 @@ def detect_and_replace_pii(text):
 
 # Function to convert DataFrame to Excel and create download link
 def df_to_excel_download_link(df, filename):
-    output = BytesIO()
-    writer = pd.ExcelWriter(output, engine='openpyxl')
-    writer.book = writer.book.active  # This line ensures compatibility with openpyxl
-    df.to_excel(writer, index=False, sheet_name='Sheet1')
+    try:
+        output = BytesIO()
+        writer = pd.ExcelWriter(output, engine='openpyxl')
+        writer.book = writer.book.active  # This line ensures compatibility with openpyxl
+        df.to_excel(writer, index=False, sheet_name='Sheet1')
 
-    writer.save()
-    output.seek(0)
-    b64 = base64.b64encode(output.getvalue()).decode()
-    href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="{filename}">Download Excel file</a>'
+        writer.save()
+        output.seek(0)
+        b64 = base64.b64encode(output.getvalue()).decode()
+        href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="{filename}">Download Excel file</a>'
 
-    return href
+        return href
+    except Exception as e:
+        print(f"Error processing file: {e}")
+        return None
 
 def main():
     # Google Analytics tracking
