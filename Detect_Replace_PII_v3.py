@@ -32,7 +32,7 @@ def detect_and_replace_pii(text):
 
 # Function to convert DataFrame to Excel and create download link
 def df_to_excel_download_link(df, filename):
-    output = io.BytesIO()
+    output = BytesIO()
     writer = pd.ExcelWriter(output, engine='openpyxl')
     writer.book = writer.book.active  # This line ensures compatibility with openpyxl
     df.to_excel(writer, index=False, sheet_name='Sheet1')
@@ -115,7 +115,7 @@ def main():
     # Add a footer
     st.markdown("""
     <hr>
-    <p class="footer">Developed by Kelum Perera, C|HFI, AWS Certified Solution Architect, Data Privacy Auditor, Chartered Accountant.</p>
+    <p class="footer">Developed by Kelum Perera, Data Privacy Auditor, Chartered Accountant, LLB (Hons), C|HFI, AWS Certified Solution Architect.</p>
     """, unsafe_allow_html=True)
         
 
