@@ -9,7 +9,7 @@ import base64
 from io import BytesIO
 import streamlit as st
 import pandas as pd
-from openpyxl import Workbook
+
 from presidio_analyzer import AnalyzerEngine
 
 # Initialize the AnalyzerEngine
@@ -36,20 +36,21 @@ def df_to_excel_download_link(df, filename):
     try:
         output = BytesIO()
         
-        workbook = Workbook()
-        sheet = workbook.active
-        sheet.title = 'Sheet1'
-
-        with pd.ExcelWriter(output, engine='openpyxl') as writer:
-            writer.book = workbook
-            df.to_excel(writer, index=False, sheet_name='Sheet1')
+        # Initialize the ExcelWriter with the BytesIO object
+        with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+            df.to_excel(writer, sheet_name='Sheet1', index=False)
             writer.save()
-             
+        
+        # Go back to the beginning of the stream
         output.seek(0)
-        b64 = base64.b64encode(output.read()).decode()
+        
+        # Encode the stream's content to base64
+        b64 = base64.b64encode(output.getvalue()).decode()
+        
+        # Create a download link
         href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="{filename}">Download Excel file</a>'
-
         return href
+        
     except Exception as e:
         print(f"Error processing file: {e}")
         return None
